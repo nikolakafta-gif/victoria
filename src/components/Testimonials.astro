@@ -1,0 +1,404 @@
+---
+const items = [
+  {
+    variant: "cream",
+    headline: "I doubled my inquiries in 8 weeks.",
+    body: "“Everything became simpler, clearer, and more sustainable.”",
+    name: "Monica L.",
+    role: "Branding Consultant",
+    image: "/assets/images/author-1.webp",
+  },
+  {
+    variant: "red",
+    headline: "My business finally feels aligned and profitable.",
+    body: "“I was working around the clock and still struggling to grow. The clarity, strategy, and support I received helped me simplify everything and create a business.",
+    name: "Monica L.",
+    role: "Branding Consultant",
+    image: "/assets/images/author-2.webp",
+  },
+  {
+    variant: "dark",
+    headline: "I signed my first 3 dream clients within 60 days.",
+    body: "“Before working together, I felt overwhelmed by marketing and unsure how to communicate my value. Now I have a clear message, consistent inquiries.",
+    name: "Sarah M.",
+    role: "Marketing Consultant",
+    image: "/assets/images/author-3.webp",
+  },
+  {
+    variant: "pink",
+    headline: "My business finally feels aligned.",
+    body: "“I stopped overthinking and started attracting clients I love working with.”",
+    name: "Jessica W.",
+    role: "Brand Strategist",
+    image: "/assets/images/author-4.webp",
+  },
+];
+---
+
+<section class="testimonials" id="blog">
+  <div class="testimonials__head">
+    <p class="section-label testimonials__eyebrow">// CLIENT LOVE</p>
+    <h2 class="testimonials__heading">Real women. Real results.</h2>
+  </div>
+
+  <div class="timeline" data-stack>
+    <div class="timeline__track" aria-hidden="true" data-stack-ignore>
+      <span class="timeline__progress"></span>
+    </div>
+
+    {items.map((t, i) => (
+      <div class={`timeline__row timeline__row--${i % 2 === 0 ? "left" : "right"}`}>
+        <span class="timeline__num">{String(i + 1).padStart(2, "0")}</span>
+        <span class="timeline__dot" aria-hidden="true"></span>
+
+        <article class={`tcard tcard--${t.variant}`}>
+          <span class="tcard__quote" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="currentColor">
+              <path d="M6 27c0-8 5-15 14-18l2 5c-5 2-8 5-8 9h8v14H6zm22 0c0-8 5-15 14-18l2 5c-5 2-8 5-8 9h8v14H28z" />
+            </svg>
+          </span>
+          <p class="tcard__headline">{t.headline}</p>
+          <p class="tcard__body">{t.body}</p>
+          <div class="tcard__author">
+            <div class="tcard__author-info">
+              <p class="tcard__name">{t.name}</p>
+              <p class="tcard__role">{t.role}</p>
+            </div>
+            <img class="tcard__avatar" src={t.image} alt={t.name} width="80" height="80" loading="lazy" />
+          </div>
+        </article>
+      </div>
+    ))}
+  </div>
+  <div class="stack-dots timeline__dots" data-stack-dots></div>
+</section>
+
+<style>
+  .testimonials {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4em; /* 64px */
+    padding: 7.5em var(--container-padding); /* 120px */
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .testimonials__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em; /* 16px */
+    width: 100%;
+    max-width: 52em;
+    text-align: center;
+  }
+  .testimonials__eyebrow {
+    color: var(--color-logo);
+  }
+  .testimonials__heading {
+    font-size: 4.5em; /* 72px */
+    line-height: 1;
+    letter-spacing: -2.88px;
+    color: var(--color-text-primary);
+  }
+
+  /* ---- Vertical timeline ---- */
+  .timeline {
+    position: relative;
+    width: 100%;
+    max-width: 72em;
+    margin-inline: auto;
+    --line-x: 50%; /* vertical line centred in the section */
+  }
+
+  .timeline__track {
+    position: absolute;
+    left: var(--line-x);
+    top: 2em;
+    bottom: 2em;
+    width: 2px;
+    transform: translateX(-50%);
+    background-color: rgba(34, 6, 3, 0.12);
+    overflow: hidden;
+  }
+  .timeline__progress {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-accent);
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+
+  .timeline__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* line sits centred in the gap */
+    column-gap: 4em;
+    align-items: start;
+    padding-block: 2em;
+  }
+
+  .timeline__num {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2.5em; /* 40px */
+    line-height: 1;
+    letter-spacing: -1.6px;
+    color: var(--color-accent);
+  }
+
+  /* Alternate the cards left / right, with the number opposite across the line. */
+  .timeline__row--left .tcard {
+    grid-column: 1;
+  }
+  .timeline__row--left .timeline__num {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .timeline__row--right .tcard {
+    grid-column: 2;
+  }
+  .timeline__row--right .timeline__num {
+    grid-column: 1;
+    justify-self: end;
+  }
+
+  .timeline__dot {
+    position: absolute;
+    left: var(--line-x);
+    top: 3.25em; /* aligns with the number's centre */
+    width: 0.875em;
+    height: 0.875em;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: var(--color-bg-soft-cream);
+    border: 2px solid rgba(34, 6, 3, 0.18);
+    z-index: 1;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  }
+  .timeline__dot.is-active {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+
+  .tcard {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /* 24px */
+    padding: 2em; /* 32px */
+  }
+  .tcard--cream {
+    background-color: var(--color-bg-cream);
+  }
+  .tcard--red {
+    background-color: var(--color-primary);
+  }
+  .tcard--dark {
+    background-color: var(--color-bg-dark);
+  }
+  .tcard--pink {
+    background-color: var(--color-bg-pink);
+  }
+
+  .tcard__quote {
+    display: block;
+    width: 3em; /* 48px */
+    height: 3em;
+    color: var(--color-accent);
+  }
+  .tcard--red .tcard__quote,
+  .tcard--dark .tcard__quote {
+    color: var(--color-text-white);
+  }
+  .tcard__quote svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tcard__headline {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1.5em; /* 24px */
+    line-height: 1;
+    letter-spacing: -0.96px;
+    color: var(--color-accent);
+  }
+  .tcard--red .tcard__headline,
+  .tcard--dark .tcard__headline {
+    color: var(--color-text-white);
+  }
+
+  .tcard__body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    color: var(--color-text-secondary);
+  }
+  .tcard--red .tcard__body,
+  .tcard--dark .tcard__body {
+    color: var(--color-text-white);
+  }
+  .tcard--pink .tcard__body {
+    color: var(--color-bg-dark);
+  }
+
+  .tcard__author {
+    display: flex;
+    align-items: center;
+    gap: 0.5em; /* 8px */
+  }
+  .tcard__author-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.5em; /* 8px */
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+  }
+  .tcard__name {
+    color: var(--color-text-primary);
+  }
+  .tcard__role {
+    color: var(--color-text-secondary);
+  }
+  .tcard--red .tcard__name,
+  .tcard--dark .tcard__name {
+    color: var(--color-text-white);
+  }
+  .tcard--red .tcard__role,
+  .tcard--dark .tcard__role {
+    color: var(--color-text-body-white);
+  }
+
+  .tcard__avatar {
+    width: 5em; /* 80px */
+    height: 5em;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  /* Tablet + mobile: drop the timeline — stacked swipe-cards */
+  @media screen and (max-width: 991px) {
+    .testimonials__heading {
+      font-size: 3.5em;
+    }
+    .timeline__track,
+    .timeline__num,
+    .timeline__dot {
+      display: none;
+    }
+    .timeline {
+      display: block;
+      position: relative;
+      width: min(22em, 90%); /* 352px card, capped on small phones */
+      margin-inline: auto;
+      overflow: visible;
+      --line-x: 50%;
+    }
+    .timeline__row {
+      display: block;
+      padding-block: 0;
+      margin: 0;
+    }
+    /* Stacked state (added by JS once the height is measured) */
+    .timeline.is-stacked > .timeline__row {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.4s ease;
+      transform-origin: center bottom;
+      will-change: transform, opacity;
+    }
+    .timeline.is-stacked > .timeline__row .tcard {
+      height: 100%;
+    }
+    .timeline.is-stacked > .timeline__row.is-top .tcard {
+      box-shadow: 0 18px 40px rgba(34, 6, 3, 0.18);
+    }
+
+    /* Compact card for the stacked layout */
+    .tcard {
+      width: 100%;
+      gap: 1em; /* 16px */
+      padding: 1.75em; /* 28px */
+      cursor: grab;
+    }
+    .tcard__quote {
+      width: 2.5em; /* 40px */
+      height: 2.5em;
+    }
+    .tcard__headline {
+      font-size: 1.375em; /* 22px */
+      letter-spacing: -0.8px;
+    }
+    .tcard__body {
+      font-size: 1em; /* 16px */
+      line-height: 1.4;
+    }
+    .tcard__avatar {
+      order: -1; /* image to the left of the name/role */
+      width: 2.75em; /* 44px */
+      height: 2.75em;
+    }
+    .tcard__author {
+      margin-top: auto; /* pin author to the bottom */
+    }
+    .tcard__author-info {
+      font-size: 1em;
+      gap: 0.25em; /* 4px */
+    }
+    .tcard__name {
+      font-size: 0.875em; /* 14px */
+    }
+    .tcard__role {
+      font-size: 0.75em; /* 12px */
+    }
+  }
+
+  /* Mobile: shrink the card a touch more */
+  @media screen and (max-width: 767px) {
+    .testimonials {
+      gap: 3em; /* 48px */
+      padding-block: 2em; /* 32px */
+    }
+    .testimonials__heading {
+      font-size: 3em; /* 48px */
+      letter-spacing: -1.92px;
+    }
+    .timeline {
+      width: min(20em, 88%);
+    }
+    .tcard {
+      padding: 1.25em; /* 20px */
+    }
+    .tcard__quote {
+      width: 2em; /* 32px */
+      height: 2em;
+    }
+    .tcard__headline {
+      font-size: 1.25em; /* 20px */
+    }
+    .tcard__body {
+      font-size: 0.875em; /* 14px */
+      line-height: 1.428;
+    }
+    .tcard__avatar {
+      width: 2.5em; /* 40px */
+      height: 2.5em;
+    }
+    .tcard__name {
+      font-size: 0.75em; /* 12px */
+    }
+    .tcard__role {
+      font-size: 0.625em; /* 10px */
+    }
+  }
+</style>

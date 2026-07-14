@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import ContactHero from "../components/ContactHero.astro";
+import ValuesMarquee from "../components/ValuesMarquee.astro";
+import Faq from "../components/Faq.astro";
+import ContactCta from "../components/ContactCta.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Contact — Victoria"
+  description="Two ways in: write to Victoria, or book straight into the calendar. Business coaching for women scaling past six figures without the burnout."
+>
+  <Navbar />
+  <main id="main" tabindex="-1">
+    <ContactHero />
+    <ValuesMarquee />
+    <Faq />
+    <ContactCta />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,249 @@
+---
+const avatars = [
+  "/assets/images/hero-avatar-1.webp",
+  "/assets/images/hero-avatar-2.webp",
+  "/assets/images/hero-avatar-3.webp",
+];
+---
+
+<section class="hero" id="top">
+  <div class="hero__image">
+    <img
+      src="/assets/images/hero-portrait.webp"
+      alt="Victoria, business coach, seated and smiling"
+      width="1200"
+      height="1593"
+      fetchpriority="high"
+    />
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__inner">
+      <p class="section-label hero__eyebrow">//BUSINESS COACH FOR WOMEN ENTREPRENEURS</p>
+
+      <h1 class="hero__heading">
+        Build a <span class="accent">business</span> that loves you back.
+      </h1>
+
+      <p class="hero__desc">
+        Strategy, pricing and systems for women scaling past six figures without
+        the 60-hour weeks, the burnout, or the guilt.
+      </p>
+
+      <div class="hero__buttons">
+        <a class="btn" href="#contact">Book a free</a>
+        <a class="btn btn--secondary" href="#work-with-me">Discover programs</a>
+      </div>
+
+      <div class="hero__proof">
+        <div class="avatars">
+          {avatars.map((src) => <img src={src} alt="" width="38" height="38" />)}
+        </div>
+        <div class="proof__text">
+          <div class="proof__rating">
+            <span class="stars" aria-hidden="true">
+              {Array.from({ length: 5 }).map(() => (
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.9l-5.81 3.06 1.11-6.47-4.7-4.58 6.5-.95z"/></svg>
+              ))}
+            </span>
+            <span class="proof__score">4.9</span>
+            <span class="proof__dot" aria-hidden="true"></span>
+            <span class="proof__count">500+ women coached</span>
+          </div>
+          <p class="proof__community">87K Instagram community</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 50em; /* ~800px */
+    max-width: 90em; /* cap at the 1440px design frame — image stops growing on wide screens */
+    margin-inline: auto;
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .hero__image {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3em var(--container-padding);
+  }
+
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em; /* 24px */
+    max-width: 37em; /* 592px */
+    text-align: center;
+  }
+
+  .hero__eyebrow {
+    color: var(--color-text-primary);
+  }
+
+  .hero__heading {
+    font-size: 5em; /* 80px */
+    line-height: 1;
+    letter-spacing: -3.2px;
+    color: var(--color-text-primary);
+  }
+  .hero__heading .accent {
+    color: var(--color-accent);
+  }
+
+  .hero__desc {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    color: var(--color-text-secondary);
+  }
+
+  .hero__buttons {
+    display: flex;
+    gap: 0.75em; /* 12px */
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero__proof {
+    display: flex;
+    align-items: center;
+    gap: 1em; /* 16px */
+  }
+
+  .avatars {
+    display: flex;
+    align-items: center;
+  }
+  .avatars img {
+    width: 2.375em; /* 38px */
+    height: 2.375em;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .avatars img:not(:first-child) {
+    margin-left: -0.625em; /* -10px overlap */
+  }
+
+  .proof__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1875em; /* 3px */
+    text-align: left;
+  }
+  .proof__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5em; /* 8px */
+  }
+  .stars {
+    display: inline-flex;
+    gap: 0;
+    color: var(--color-accent);
+  }
+  .stars svg {
+    width: 0.75em; /* 12px */
+    height: 0.75em;
+    display: block;
+  }
+  .proof__score,
+  .proof__count {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.78em; /* ~12.5px */
+    color: #171717;
+    white-space: nowrap;
+  }
+  .proof__dot {
+    width: 0.25em;
+    height: 0.25em;
+    border-radius: 50%;
+    background-color: #171717;
+  }
+  .proof__community {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.75em; /* 12px */
+    color: var(--color-text-muted);
+  }
+
+  /* Tablet & below: stack image above content, image capped to a contained portrait */
+  @media screen and (max-width: 991px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      padding-top: 3em;
+    }
+    .hero__image {
+      width: 85%; /* 85% of the hero container, centred */
+      aspect-ratio: 1200 / 1593; /* keep the portrait's natural proportions */
+      height: auto;
+      max-width: 100%;
+      margin-inline: auto;
+    }
+    .hero__image img {
+      position: static;
+      width: 100%;
+      height: 100%;
+    }
+    .hero__content {
+      padding: 3em var(--container-padding);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .hero__content {
+      order: -1; /* content above the image on mobile */
+      padding: 2em var(--container-padding);
+    }
+    .hero__image {
+      width: 100%; /* full-bleed on mobile — reset the tablet cap so it can't force the grid wider */
+      aspect-ratio: auto;
+      height: 23.5em; /* 376px */
+      margin-inline: 0;
+    }
+    .hero__inner {
+      gap: 1.5em; /* 24px */
+    }
+    .hero__heading {
+      font-size: 3em; /* 48px */
+      letter-spacing: -1.92px;
+    }
+    .hero__desc {
+      font-size: 0.875em; /* 14px */
+      line-height: 1.428;
+      letter-spacing: -0.28px;
+    }
+    .hero__buttons {
+      gap: 0.75em; /* 12px */
+    }
+    .hero__proof {
+      flex-direction: column; /* avatars stacked above the rating on mobile */
+      gap: 1em; /* 16px */
+    }
+    .proof__text {
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

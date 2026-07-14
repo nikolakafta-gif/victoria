@@ -1,0 +1,114 @@
+---
+---
+
+<section class="wcta">
+  <div class="wcta__media">
+    <img src="/assets/images/wwm-cta.webp" alt="Victoria reading in warm light" width="1200" height="1603" loading="lazy" />
+  </div>
+
+  <div class="wcta__content">
+    <div class="wcta__inner">
+      <div class="wcta__text">
+        <p class="section-label wcta__eyebrow">// Join with me</p>
+        <h2 class="wcta__heading">Still deciding? Let&rsquo;s decide together.</h2>
+        <p class="wcta__desc">
+          One free call. You leave with clarity either way, that&rsquo;s the deal.
+        </p>
+      </div>
+      <a class="btn wcta__btn" href="/contact">Book a free</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wcta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 90em; /* 1440px design frame */
+    margin-inline: auto;
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .wcta__media {
+    position: relative;
+    min-height: 40em;
+  }
+  .wcta__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wcta__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3em 4em; /* 48px 64px */
+  }
+  .wcta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em; /* 40px */
+    width: 100%;
+    max-width: 37em; /* 592px */
+  }
+  .wcta__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em; /* 24px */
+    text-align: center;
+  }
+  .wcta__eyebrow {
+    color: var(--color-text-primary);
+  }
+  .wcta__heading {
+    font-size: 5em; /* 80px */
+    line-height: 1;
+    letter-spacing: -3.2px;
+    color: var(--color-text-primary);
+  }
+  .wcta__desc {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    color: var(--color-text-secondary);
+  }
+
+  @media screen and (max-width: 991px) {
+    .wcta {
+      grid-template-columns: 1fr;
+    }
+    .wcta__content {
+      order: -1;
+      padding: 4em var(--container-padding);
+    }
+    .wcta__heading {
+      font-size: 3.5em;
+    }
+    .wcta__media {
+      width: 85%;
+      min-height: 0;
+      aspect-ratio: 1200 / 1603;
+      margin-inline: auto;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .wcta__content {
+      padding-block: 3em;
+    }
+    .wcta__heading {
+      font-size: 2.5em; /* 40px */
+      letter-spacing: -1.6px;
+    }
+    .wcta__media {
+      width: 100%;
+    }
+  }
+</style>

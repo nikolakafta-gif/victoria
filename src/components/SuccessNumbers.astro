@@ -1,0 +1,122 @@
+---
+const stats = [
+  { value: "$40M+", label: "Revenue in 5 months" },
+  { value: "$12K", label: "months on 20-hour weeks" },
+  { value: "38%", label: "higher prices, zero lost clients" },
+];
+---
+
+<section class="numbers">
+  <div class="numbers__inner">
+    <p class="section-label numbers__eyebrow">// The numbers</p>
+
+    <div class="numbers__content">
+      <h2 class="numbers__heading">
+        Success Stories From Women Who Chose to Build Their Business Differently
+      </h2>
+      <div class="numbers__grid">
+        {stats.map((s) => (
+          <div class="numbers__stat">
+            <p class="numbers__value">{s.value}</p>
+            <p class="numbers__label">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .numbers {
+    display: flex;
+    justify-content: center;
+    padding: 7.5em var(--container-padding); /* 120px */
+    background-color: var(--color-bg-soft-cream);
+  }
+  .numbers__inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 4em;
+    width: 100%;
+    max-width: 82em; /* 1312px */
+  }
+  .numbers__eyebrow {
+    flex-shrink: 0;
+    color: var(--color-logo);
+    padding-top: 0.25em;
+  }
+
+  .numbers__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4em; /* 64px */
+    max-width: 40.1875em; /* 643px */
+    margin-left: auto;
+  }
+  .numbers__heading {
+    font-size: 3em; /* 48px */
+    line-height: 1;
+    letter-spacing: -1.92px;
+    color: var(--color-text-primary);
+  }
+
+  .numbers__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5em; /* 24px */
+  }
+  .numbers__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+  }
+  .numbers__value {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 3em; /* 48px */
+    line-height: 1;
+    letter-spacing: -1.92px;
+    color: var(--color-accent);
+  }
+  .numbers__label {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 0.875em; /* 14px */
+    line-height: 1.428;
+    letter-spacing: -0.28px;
+    color: var(--color-text-secondary);
+  }
+
+  @media screen and (max-width: 991px) {
+    .numbers {
+      padding-block: 5em;
+    }
+    .numbers__inner {
+      flex-direction: column;
+      gap: 2em;
+    }
+    .numbers__content {
+      margin-left: 0;
+      max-width: 100%;
+      gap: 2.5em;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .numbers {
+      padding-block: 3em;
+    }
+    .numbers__heading {
+      font-size: 2.25em; /* 36px */
+      letter-spacing: -1.44px;
+    }
+    .numbers__grid {
+      grid-template-columns: 1fr;
+      gap: 1.5em;
+    }
+    .numbers__value {
+      font-size: 2.75em; /* 44px */
+    }
+  }
+</style>

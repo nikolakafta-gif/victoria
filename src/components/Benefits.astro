@@ -1,0 +1,252 @@
+---
+const items = [
+  {
+    icon: "/assets/images/benefit-icon-1.svg",
+    title: "Attract aligned clients",
+    desc: "Positioning that pulls the right women in, no more discount shoppers.",
+    variant: "cream",
+  },
+  {
+    icon: "/assets/images/benefit-icon-2.svg",
+    title: "Price with confidence",
+    desc: "Offers and pricing that finally pay you what the work is worth.",
+    variant: "red",
+  },
+  {
+    icon: "/assets/images/benefit-icon-3.webp",
+    title: "Systems that scale",
+    desc: "A simple, repeatable growth plan you can run in 25 hours a week.",
+    variant: "pink",
+  },
+  {
+    icon: "/assets/images/benefit-icon-4.svg",
+    title: "Grow without burnout",
+    desc: "Boundaries built into the business model, not bolted on after the crash.",
+    variant: "white",
+  },
+];
+---
+
+<section class="benefits" id="results">
+  <div class="benefits__head">
+    <p class="section-label benefits__eyebrow">// THE RESULTS</p>
+    <h2 class="benefits__heading">Coaching that respects your life</h2>
+  </div>
+
+  <ul class="benefits__items" data-stack>
+    {items.map((item, i) => (
+      <li class={`benefits__wrap benefits__wrap--${i % 2 === 0 ? "cw" : "ccw"}`}>
+        <div class={`benefits__card benefits__card--${item.variant}`}>
+          <img class="benefits__icon" src={item.icon} alt="" width="72" height="72" loading="lazy" />
+          <div class="benefits__content">
+            <h3 class="benefits__title">{item.title}</h3>
+            <p class="benefits__desc">{item.desc}</p>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ul>
+  <div class="benefits__nav">
+    <button class="benefits__arrow" type="button" data-stack-prev aria-label="Previous result">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="stack-dots" data-stack-dots></div>
+    <button class="benefits__arrow" type="button" data-stack-next aria-label="Next result">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  .benefits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4em; /* 64px */
+    padding: 7.5em var(--container-padding); /* 120px */
+    background-color: var(--color-bg-dark);
+  }
+
+  .benefits__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em; /* 16px */
+    text-align: center;
+  }
+  .benefits__eyebrow {
+    color: var(--color-text-white);
+  }
+  .benefits__heading {
+    /* em max-width resolves against THIS element's font-size (80px), so 452px = 5.65em */
+    max-width: 5.65em; /* 452px */
+    font-size: 5em; /* 80px */
+    line-height: 1;
+    letter-spacing: -3.2px;
+    color: var(--color-text-white);
+  }
+
+  .benefits__items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .benefits__wrap {
+    flex-shrink: 0;
+  }
+  .benefits__wrap:not(:last-child) {
+    margin-right: 1.5em; /* looser fan — cards overlap only slightly */
+  }
+  .benefits__wrap--cw {
+    transform: rotate(8deg);
+  }
+  .benefits__wrap--ccw {
+    transform: rotate(-8deg);
+  }
+
+  .benefits__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4em; /* 64px */
+    width: 17.1875em; /* 275px */
+    padding: 4em 1em 1.5em; /* 64 top, 16 sides, 24 bottom */
+    border: 1px solid var(--color-border-light);
+  }
+  .benefits__card--cream {
+    background-color: var(--color-bg-cream);
+  }
+  .benefits__card--red {
+    background-color: var(--color-primary);
+    border-color: transparent;
+    color: var(--color-text-white);
+  }
+  .benefits__card--pink {
+    background-color: var(--color-bg-pink);
+  }
+  .benefits__card--white {
+    background-color: var(--color-bg-white);
+  }
+
+  .benefits__icon {
+    width: 4.5em; /* 72px */
+    height: 4.5em;
+    object-fit: contain;
+  }
+
+  .benefits__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em; /* 12px */
+    text-align: center;
+  }
+
+  .benefits__title {
+    font-size: 1.5em; /* 24px */
+    line-height: 1;
+    letter-spacing: -0.96px;
+    color: var(--color-text-ink);
+  }
+  .benefits__card--red .benefits__title {
+    color: var(--color-text-white);
+  }
+
+  .benefits__desc {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.875em; /* 14px */
+    line-height: 1.143;
+    color: var(--color-text-primary);
+  }
+  .benefits__card--red .benefits__desc {
+    color: var(--color-text-white);
+  }
+
+  /* Swipe-carousel nav (arrows + dots) — tablet & mobile only */
+  .benefits__nav {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5em; /* 24px */
+    margin-top: 2.5em; /* 40px */
+  }
+  .benefits__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3em; /* 48px */
+    height: 3em;
+    border: 1px solid rgba(239, 231, 217, 0.35);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-text-white);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  }
+  .benefits__arrow svg {
+    width: 1.25em; /* 20px */
+    height: 1.25em;
+  }
+  .benefits__arrow:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  /* Tablet + mobile: stacked swipe-cards */
+  @media screen and (max-width: 991px) {
+    .benefits__heading {
+      font-size: 3.5em;
+    }
+    .benefits__items {
+      display: block;
+      position: relative;
+      width: min(18em, 85%); /* 288px card, capped on small phones */
+      margin-inline: auto;
+      overflow: visible;
+    }
+    .benefits__wrap {
+      transform: none; /* kill the desktop fan rotation */
+      margin: 0;
+    }
+    .benefits__wrap:not(:last-child) {
+      margin-right: 0;
+    }
+    /* Stacked state (added by JS once the height is measured) */
+    .benefits__items.is-stacked > .benefits__wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.4s ease;
+      transform-origin: center bottom;
+      will-change: transform, opacity;
+    }
+    .benefits__items.is-stacked > .benefits__wrap .benefits__card {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+    .benefits__items.is-stacked > .benefits__wrap.is-top .benefits__card {
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+    .benefits__card {
+      width: 100%;
+    }
+    .benefits__nav {
+      display: flex;
+    }
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 767px) {
+    .benefits {
+      padding-block: 2.5em; /* 40px */
+    }
+    .benefits__heading {
+      font-size: 3em; /* 48px */
+      letter-spacing: -1.92px;
+    }
+  }
+</style>

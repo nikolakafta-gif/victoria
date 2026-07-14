@@ -1,0 +1,105 @@
+---
+interface Props {
+  items?: string[];
+  variant?: "pink" | "dark";
+  label?: string;
+}
+
+const {
+  items = [
+    "Elegant Growth",
+    "Meaningful Impact",
+    "Authentic Presence",
+    "Softly Strategic",
+  ],
+  variant = "pink",
+  label = "Brand values",
+} = Astro.props;
+---
+
+<section class={`values values--${variant}`} aria-label={label}>
+  <div class="values__track">
+    {[0, 1].map((copy) => (
+      <div class="values__set" aria-hidden={copy === 1 ? "true" : undefined}>
+        {items.map((item) => (
+          <span class="values__group">
+            <span class="values__item">{item}</span>
+            <span class="values__sep">//</span>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .values {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-block: 1.5em; /* 24px */
+  }
+  .values--pink {
+    background-color: #fecde5;
+    --values-color: var(--color-bg-dark);
+  }
+  .values--dark {
+    background-color: var(--color-bg-dark);
+    --values-color: var(--color-bg-cream);
+  }
+
+  .values__track {
+    display: flex;
+    flex-shrink: 0;
+    width: max-content;
+    animation: values-scroll 28s linear infinite;
+  }
+
+  .values__set {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .values__group {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.125em; /* 18px */
+    padding-right: 1.125em;
+  }
+
+  .values__item,
+  .values__sep {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2em; /* 32px */
+    line-height: 1.25;
+    text-transform: uppercase;
+    color: var(--values-color);
+    white-space: nowrap;
+  }
+
+  @keyframes values-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .values__track {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .values {
+      padding-block: 0.75em; /* shorter band on mobile */
+    }
+    .values__item,
+    .values__sep {
+      font-size: 1.5em; /* 24px */
+    }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import WwmHero from "../components/WwmHero.astro";
+import Plans from "../components/Plans.astro";
+import Process from "../components/Process.astro";
+import ClientOutcomes from "../components/ClientOutcomes.astro";
+import SuccessNumbers from "../components/SuccessNumbers.astro";
+import Faq from "../components/Faq.astro";
+import WwmCta from "../components/WwmCta.astro";
+import Footer from "../components/Footer.astro";
+
+const faqItems = [
+  {
+    q: "How is this different from other business coaching?",
+    a: "The same method, the Sustainable Scale Method, delivered at three levels of access and investment. You pick the pace and support that fit where you are.",
+  },
+  {
+    q: "What if I'm between programs, which one fits?",
+    a: "Book the free call and I'll tell you honestly. It usually comes down to your revenue, your timeline, and how much hands-on support you want.",
+  },
+  {
+    q: "How much time does it take each week?",
+    a: "Plan on 3 to 5 focused hours a week. The method is built to fit around a real business, not to become a second job.",
+  },
+  {
+    q: "Do you offer payment plans?",
+    a: "Yes. Every program has a monthly option so you can start now and spread the investment across your engagement.",
+  },
+  {
+    q: "What results can I actually expect?",
+    a: "Clearer pricing, stronger offers, and systems that hold. Most clients raise prices without losing clients and win back hours, but your results track the work you put in.",
+  },
+];
+---
+
+<BaseLayout
+  title="Work With Me — Victoria"
+  description="The Sustainable Scale Method at three levels of access: 1:1 Private Coaching, The Collective, and a self-paced course. Pick your pace."
+>
+  <Navbar />
+  <main id="main" tabindex="-1">
+    <WwmHero />
+    <Plans />
+    <Process />
+    <ClientOutcomes />
+    <SuccessNumbers />
+    <Faq items={faqItems} />
+    <WwmCta />
+  </main>
+  <Footer />
+</BaseLayout>

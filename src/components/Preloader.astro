@@ -1,0 +1,118 @@
+---
+const text = "VICTORIA LIFE COACH";
+const words = text.split(" ");
+let index = 0;
+const wordChars = words.map((word) =>
+  [...word].map((ch) => ({ ch, i: index++ }))
+);
+// Total letters, used to time the exit after the last letter lands.
+const total = index;
+---
+
+<div id="preloader" class="preloader" style={`--letters:${total}`}>
+  <span class="preloader__text" aria-label={text}>
+    {wordChars.map((chars) => (
+      <span class="preloader__word">
+        {chars.map(({ ch, i }) => (
+          <span class="preloader__char" style={`--i:${i}`} aria-hidden="true">{ch}</span>
+        ))}
+      </span>
+    ))}
+  </span>
+</div>
+
+<style>
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    overflow: hidden;
+    background-color: var(--color-bg-soft-cream);
+    /* Exit: fade the whole overlay out after the text has written itself. */
+    animation: preloader-out 0.8s ease forwards;
+    animation-delay: calc(var(--letters) * 0.07s + 0.9s);
+  }
+
+  .preloader__text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 0.35em;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 6.5vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-logo);
+    text-align: center;
+  }
+
+  .preloader__word {
+    display: inline-flex;
+  }
+
+  .preloader__char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.35em);
+    animation: preloader-letter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i) * 0.07s);
+  }
+
+  @keyframes preloader-letter {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes preloader-out {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .preloader__char {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .preloader {
+      animation-delay: 0.6s;
+    }
+  }
+</style>
+
+<script>
+  const pre = document.getElementById("preloader");
+  if (pre) {
+    const html = document.documentElement;
+    html.classList.add("is-preloading");
+
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      html.classList.remove("is-preloading");
+      window.lenis?.start();
+      pre.remove();
+      // Signal the intro (navbar + hero) to play now that the site is revealed.
+      window.dispatchEvent(new Event("preloader:done"));
+    };
+
+    // The overlay's own out-animation ends on #preloader (letter animations
+    // end on child spans, so filter by target).
+    pre.addEventListener("animationend", (e) => {
+      if (e.target === pre) finish();
+    });
+
+    // Safety net in case animationend never fires (e.g. background tab).
+    window.setTimeout(finish, 4500);
+  }
+</script>

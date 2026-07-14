@@ -1,0 +1,200 @@
+---
+---
+
+<section class="coach" id="podcast">
+  <div class="coach__inner">
+    <div class="coach__profile">
+      <div class="coach__header">
+        <p class="section-label coach__eyebrow">// MEET YOUR COACH</p>
+        <h2 class="coach__heading">Hi,<br />I&rsquo;m Victoria.</h2>
+      </div>
+      <div class="coach__desc-col">
+        <p class="coach__desc">
+          Ex-corporate strategist. I built my first six-figure business with no
+          investors and no blueprint, just grit, good systems, and a refusal to
+          hustle myself into the ground. Eight years later, I&rsquo;ve helped
+          500+ women do the same, sustainably.
+        </p>
+        <a class="btn" href="#about">Read my story</a>
+      </div>
+    </div>
+
+    <div class="coach__momentum">
+      <div class="coach__momentum-media">
+        <img src="/assets/images/coach-momentum.webp" alt="Victoria working at her desk" width="900" height="600" loading="lazy" />
+      </div>
+      <div class="coach__stat">
+        <p class="coach__stat-value">$40M+</p>
+        <p class="coach__stat-label">Client revenue</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .coach {
+    display: flex;
+    justify-content: center;
+    padding: 7.5em var(--container-padding); /* 120px */
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .coach__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 6em; /* 96px */
+    width: 100%;
+    max-width: 82em; /* 1312px */
+  }
+
+  .coach__profile {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 4em;
+  }
+
+  .coach__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+    flex-shrink: 0;
+  }
+  .coach__eyebrow {
+    color: var(--color-logo);
+  }
+  .coach__heading {
+    font-size: 4.5em; /* 72px */
+    line-height: 1;
+    letter-spacing: -2.88px;
+    color: var(--color-text-primary);
+  }
+
+  .coach__desc-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2em; /* 32px */
+    max-width: 54.19em; /* 867px */
+  }
+  .coach__desc {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 2em; /* 32px */
+    line-height: 1.125;
+    letter-spacing: -0.32px;
+    color: var(--color-text-secondary);
+    text-indent: 3.375em; /* 108px @32 */
+  }
+
+  .coach__momentum {
+    display: flex;
+    gap: 1em; /* 16px */
+    align-items: stretch;
+  }
+  .coach__momentum-media {
+    position: relative;
+    width: 47.19em; /* 755px */
+    height: 26.75em; /* 428px */
+    flex-shrink: 0;
+  }
+  .coach__momentum-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .coach__stat {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5em; /* 8px */
+    padding: 2em;
+  }
+  .coach__stat-value {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 8.75em; /* 140px */
+    line-height: 1;
+    letter-spacing: -5.6px;
+    color: var(--color-accent);
+  }
+  .coach__stat-label {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    color: var(--color-text-secondary);
+  }
+
+  @media screen and (max-width: 991px) {
+    .coach {
+      padding-block: 4em; /* trim the oversized 120px top/bottom on tablet */
+    }
+    .coach__profile {
+      flex-direction: column;
+      gap: 2em;
+    }
+    .coach__heading {
+      font-size: 3.5em;
+    }
+    .coach__desc {
+      font-size: 1.75em;
+    }
+    .coach__momentum {
+      flex-direction: column;
+    }
+    .coach__momentum-media {
+      width: 100%;
+      height: 34em; /* taller image on tablet */
+    }
+    .coach__stat-value {
+      font-size: 6em;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .coach {
+      padding-block: 2em; /* 32px */
+    }
+    .coach__inner {
+      gap: 2em; /* 32px */
+    }
+    .coach__profile {
+      gap: 1.5em; /* 24px */
+    }
+    .coach__heading {
+      font-size: 3em; /* 48px */
+      letter-spacing: -1.92px;
+    }
+    .coach__desc-col {
+      gap: 2em; /* 32px */
+    }
+    .coach__desc {
+      font-size: 1.125em; /* 18px */
+      line-height: 1.333;
+      letter-spacing: -0.36px;
+      text-indent: 0;
+    }
+    .coach__momentum {
+      gap: 2em; /* 32px */
+    }
+    .coach__momentum-media {
+      width: 100%;
+      height: 26.75em; /* 428px */
+    }
+    .coach__stat-value {
+      font-size: 5em; /* 80px */
+      letter-spacing: -3.2px;
+    }
+    .coach__stat-label {
+      font-size: 1.125em; /* 18px */
+    }
+  }
+</style>

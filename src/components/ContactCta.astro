@@ -1,0 +1,66 @@
+---
+---
+
+<section class="cta" id="join">
+  <div class="cta__inner">
+    <div class="cta__header">
+      <p class="section-label cta__eyebrow">// Join now</p>
+      <h2 class="cta__heading">Not ready to talk? Start with the free guide.</h2>
+    </div>
+    <a class="btn cta__btn" href="#top">Get the Sustainable Scale Guide</a>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4.5em var(--container-padding); /* 72px */
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em; /* 40px */
+    width: 100%;
+  }
+
+  .cta__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em; /* 24px */
+    text-align: center;
+  }
+  .cta__eyebrow {
+    color: var(--color-logo);
+  }
+  .cta__heading {
+    /* em max-width resolves against THIS element's font-size (72px), so 638px = 8.86em */
+    max-width: 8.86em; /* 638px */
+    font-size: 4.5em; /* 72px */
+    line-height: 1;
+    letter-spacing: -2.88px;
+    color: var(--color-text-primary);
+  }
+
+  @media screen and (max-width: 991px) {
+    .cta__heading {
+      font-size: 3.5em;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .cta {
+      padding-block: 3em; /* 48px */
+    }
+    .cta__heading {
+      font-size: 2.5em; /* 40px */
+      letter-spacing: -1.6px;
+    }
+  }
+</style>

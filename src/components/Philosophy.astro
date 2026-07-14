@@ -1,0 +1,101 @@
+---
+---
+
+<section class="philosophy" id="about">
+  <div class="philosophy__inner">
+    <div class="philosophy__head">
+      <p class="section-label philosophy__eyebrow">// THE PHILOSOPHY</p>
+      <h2 class="philosophy__heading">
+        You didn&rsquo;t start your business to build yourself.
+      </h2>
+    </div>
+    <div class="philosophy__desc-row">
+      <p class="philosophy__desc">
+        I help women entrepreneurs grow revenue with strategy and systems that
+        protect their energy, so the business funds your life, not the other way
+        around.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .philosophy {
+    display: flex;
+    justify-content: center;
+    padding: 7.5em var(--container-padding) 5em; /* 120 / 80 */
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .philosophy__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /* 24px */
+    width: 100%;
+    max-width: 82em; /* 1312px */
+  }
+
+  .philosophy__head {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+    max-width: 47.19em; /* 755px */
+  }
+
+  .philosophy__eyebrow {
+    color: var(--color-accent);
+  }
+
+  .philosophy__heading {
+    font-size: 5em; /* 80px */
+    line-height: 1;
+    letter-spacing: -3.2px;
+    color: var(--color-text-primary);
+  }
+
+  .philosophy__desc-row {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .philosophy__desc {
+    /* em max-width resolves against THIS element's font-size (32px), so 753px = 23.53em */
+    max-width: 23.53em; /* 753px */
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 2em; /* 32px */
+    line-height: 1.125; /* 36/32 */
+    letter-spacing: -0.32px;
+    color: var(--color-text-secondary);
+    text-indent: 3.375em; /* 108px @32 */
+  }
+
+  @media screen and (max-width: 991px) {
+    .philosophy__heading {
+      font-size: 3.5em; /* 56px */
+    }
+    .philosophy__desc {
+      font-size: 1.75em;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .philosophy {
+      padding-block: 2em; /* 32px */
+    }
+    .philosophy__inner {
+      gap: 2.5em; /* 40px */
+    }
+    .philosophy__heading {
+      font-size: 2.5em; /* 40px */
+      letter-spacing: -1.6px;
+    }
+    .philosophy__desc {
+      max-width: 18em;
+      font-size: 0.875em; /* 14px */
+      line-height: 1.428;
+      letter-spacing: -0.28px;
+      text-indent: 0;
+    }
+  }
+</style>

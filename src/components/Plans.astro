@@ -1,0 +1,251 @@
+---
+const plans = [
+  {
+    variant: "dark",
+    term: "1:1",
+    duration: "6 months",
+    name: "Private Coaching",
+    desc: "For founders past $5K months who want a hands-on partner in the numbers.",
+    cta: "Apply now",
+    ctaStyle: "light",
+    price: "$8,000",
+    priceOld: "$10,000",
+    href: "/contact",
+  },
+  {
+    variant: "red",
+    term: "Group",
+    duration: "12 weeks",
+    name: "The Collective",
+    desc: "For women scaling to consistent $10K months with peers beside them.",
+    cta: "Join the waitlist",
+    ctaStyle: "light",
+    price: "$2,400",
+    priceOld: "$3,500",
+    href: "/contact",
+  },
+  {
+    variant: "cream",
+    term: "Self",
+    duration: "12 weeks",
+    name: "Self-Paced Course",
+    desc: "For your first $10K month: pricing, offers and systems, on your schedule.",
+    cta: "Start today",
+    ctaStyle: "primary",
+    price: "$499",
+    priceOld: "$1,000",
+    href: "/contact",
+  },
+];
+---
+
+<section class="plans" id="work-with-me">
+  <div class="plans__grid">
+    {plans.map((p) => (
+      <article class={`plan plan--${p.variant}`}>
+        <div class="plan__details">
+          <div class="plan__badge">
+            <span class="plan__term">{p.term}</span>
+            <span class="plan__duration">{p.duration}</span>
+          </div>
+          <h3 class="plan__name">{p.name}</h3>
+          <p class="plan__desc">{p.desc}</p>
+        </div>
+        <div class="plan__footer">
+          <a class={`plan__cta plan__cta--${p.ctaStyle}`} href={p.href}>{p.cta}</a>
+          <p class="plan__price">
+            <span class="plan__price-now">{p.price}</span>
+            <span class="plan__price-old">{p.priceOld}</span>
+          </p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .plans {
+    display: flex;
+    justify-content: center;
+    padding: 4em var(--container-padding); /* 64px */
+    background-color: var(--color-bg-soft-cream);
+  }
+  .plans__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5em; /* 24px */
+    width: 100%;
+    max-width: 82em; /* 1312px */
+  }
+
+  .plan {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2em; /* 32px */
+    padding: 1.25em; /* 20px */
+  }
+  .plan--dark {
+    background-color: var(--color-bg-dark);
+  }
+  .plan--red {
+    background-color: var(--color-primary);
+  }
+  .plan--cream {
+    background-color: var(--color-bg-cream);
+  }
+
+  .plan__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+  }
+
+  .plan__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em; /* 8px */
+    align-self: flex-start;
+    padding: 0.25em 0.5em 0.25em 0.25em;
+    border-radius: 99px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .plan--cream .plan__badge {
+    background-color: rgba(19, 19, 19, 0.08);
+    border-color: rgba(19, 19, 19, 0.15);
+  }
+  .plan__term {
+    padding: 0.25em 0.5em;
+    border-radius: 16px;
+    background-color: var(--color-bg-white);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.75em; /* 12px */
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--color-text-ink);
+  }
+  .plan__duration {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.75em; /* 12px */
+    text-transform: uppercase;
+    color: var(--color-text-white);
+  }
+  .plan--cream .plan__duration {
+    color: var(--color-text-ink);
+  }
+
+  .plan__name {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2em; /* 32px */
+    line-height: 1;
+    letter-spacing: -1.28px;
+    color: var(--color-text-white);
+  }
+  .plan--cream .plan__name {
+    color: var(--color-text-primary);
+  }
+
+  .plan__desc {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .plan--cream .plan__desc {
+    color: var(--color-text-secondary);
+  }
+
+  .plan__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    flex-wrap: wrap;
+  }
+  .plan__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75em 1.5em; /* 12px 24px */
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 1em; /* 16px */
+    line-height: 1.5;
+    text-transform: uppercase;
+    transition: opacity var(--transition-fast);
+  }
+  .plan__cta:hover {
+    opacity: 0.85;
+  }
+  .plan__cta--light {
+    background-color: var(--color-bg-white);
+    color: var(--color-accent);
+  }
+  .plan__cta--primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-white);
+  }
+
+  .plan__price {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em; /* 8px */
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2em; /* 32px */
+    line-height: 1;
+    letter-spacing: -1.28px;
+    white-space: nowrap;
+  }
+  .plan__price-now {
+    color: var(--color-text-white);
+  }
+  .plan--cream .plan__price-now {
+    color: var(--color-text-primary);
+  }
+  .plan__price-old {
+    text-decoration: line-through;
+    opacity: 0.4;
+    color: var(--color-text-white);
+  }
+  .plan--cream .plan__price-old {
+    color: var(--color-text-ink);
+  }
+
+  /* Tablet & below: stack the plans */
+  @media screen and (max-width: 991px) {
+    .plans {
+      padding-block: 3em;
+    }
+    .plans__grid {
+      grid-template-columns: 1fr;
+      max-width: 32em; /* 512px */
+      gap: 1em;
+    }
+    .plan {
+      padding: 1.5em;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .plan__name {
+      font-size: 1.75em; /* 28px */
+    }
+    .plan__desc {
+      font-size: 1em; /* 16px */
+    }
+    .plan__price {
+      font-size: 1.75em;
+    }
+    .plan__cta {
+      font-size: 0.875em;
+      padding: 0.5em 1em;
+    }
+  }
+</style>

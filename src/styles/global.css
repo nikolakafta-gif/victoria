@@ -1,0 +1,388 @@
+/* ==========================================================================
+   Fluid Scaling System
+   Viewport-based scaling — all em values scale automatically.
+   ========================================================================== */
+
+/* Desktop */
+:root {
+  --size-unit: 16; /* body font-size in design — no px */
+  --size-container-ideal: 1440; /* Figma frame width — set during Phase 0 */
+  --size-container-min: 992px;
+  --size-container-max: 1440px;
+  --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+  --container-padding: 4em; /* 64px side padding from Figma */
+}
+
+/* Tablet */
+@media screen and (max-width: 991px) {
+  :root {
+    --size-container-ideal: 834;
+    --size-container-min: 768px;
+    --size-container-max: 991px;
+    --container-padding: 1.5em;
+  }
+}
+
+/* Mobile Landscape */
+@media screen and (max-width: 767px) {
+  :root {
+    --size-container-ideal: 550;
+    --size-container-min: 480px;
+    --size-container-max: 767px;
+    --container-padding: 1.5em; /* 24px on mobile per Figma */
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (max-width: 479px) {
+  :root {
+    --size-container-ideal: 390;
+    --size-container-min: 320px;
+    --size-container-max: 479px;
+    --container-padding: 1.5em; /* 24px on mobile per Figma */
+  }
+}
+
+/* ==========================================================================
+   Design Tokens — Update per project (Phase 0)
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-primary: #e8001d;        /* accent red */
+  --color-accent: #e8001d;
+  --color-logo: #c72836;           /* logo wordmark red */
+  --color-bg-white: #ffffff;
+  --color-bg-cream: #f3edd9;       /* cream sections / secondary button */
+  --color-bg-soft-cream: #fffcf4;  /* default page bg / navbar */
+  --color-bg-pink: #ffdbed;        /* pink cards (benefits / testimonials / work) */
+  --color-bg-dark: #220603;        /* warm near-black */
+  --color-text-primary: #000000;   /* headings */
+  --color-text-ink: #131313;       /* near-black for pills / small titles */
+  --color-text-secondary: #2f2f2f; /* body copy */
+  --color-text-muted: #736e69;     /* small meta text */
+  --color-text-placeholder: #5b5b5b; /* form placeholders */
+  --color-text-white: #ffffff;
+  --color-text-body-white: #bfbebe;/* body copy on dark */
+  --color-border-light: #e8e8e8;   /* form inputs, FAQ + benefit card borders */
+
+  /* Typography — imported in BaseLayout.astro (Inter + Fraunces).
+     ZT Formom is the design font; Fraunces is the free fallback. */
+  --font-heading: "ZT Formom", "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* Border radius (design is largely sharp-cornered) */
+  --radius-none: 0;
+  --radius-sm: 0.25em;    /* 4px */
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable; /* reserve scrollbar space so locking scroll (menu open) doesn't shift layout */
+}
+
+/* Lock scroll while the preloader is on screen. */
+html.is-preloading {
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--size-font);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-soft-cream);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-text-primary);
+  overflow-wrap: break-word;
+}
+
+p {
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   Base Utilities
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Section label — uppercase eyebrow text (ZT Formom, e.g. "//BUSINESS COACH") */
+.section-label {
+  font-family: var(--font-heading);
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+/* Button — base (uppercase Inter, sharp corners) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.75em 1.5em; /* 12px 24px */
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  font-family: var(--font-body);
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius-none);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+/* Secondary button — cream */
+.btn--secondary {
+  background-color: var(--color-bg-cream);
+  color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   Focus & Accessibility
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sr-only:focus {
+  position: fixed;
+  top: 0.5em;
+  left: 0.5em;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  padding: 0.75em 1.5em;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Letter-roll hover — each letter rolls up and a copy rises from below,
+   staggered per letter. Applied to links marked [data-roll]; the JS in
+   BaseLayout wraps each character. Falls back to plain text if JS is off.
+   ========================================================================== */
+
+.roll-char {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.roll-top,
+.roll-bottom {
+  display: inline-block;
+  will-change: transform;
+}
+
+.roll-bottom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .roll-top,
+  .roll-bottom {
+    transition: transform 0.42s cubic-bezier(0.66, 0, 0.34, 1);
+    transition-delay: calc(var(--i) * 0.028s);
+  }
+
+  [data-roll]:hover .roll-top,
+  [data-roll]:focus-visible .roll-top {
+    transform: translateY(-100%);
+  }
+  [data-roll]:hover .roll-bottom,
+  [data-roll]:focus-visible .roll-bottom {
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Lenis smooth scroll — classes are toggled on <html> by the Lenis instance
+   (initialised in BaseLayout). No effect unless Lenis is running.
+   ========================================================================== */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Stacked swipe-card carousel controls (Client Love + Results). The dots are
+   created by JS, so these styles must be global. Shown on tablet & mobile only.
+   ========================================================================== */
+
+.stack-dots {
+  display: none;
+  justify-content: center;
+  gap: 0.625em; /* 10px */
+}
+
+.stack-dot {
+  width: 0.5em; /* 8px */
+  height: 0.5em;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(34, 6, 3, 0.22);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.stack-dot.is-active {
+  background-color: var(--color-accent);
+  transform: scale(1.4);
+}
+
+/* Client Love dots sit below the stacked card. */
+.timeline__dots {
+  margin-top: 2.5em; /* 40px */
+}
+
+/* Benefits sits on a dark background — lighten the inactive dots there. */
+.benefits .stack-dot {
+  background-color: rgba(239, 231, 217, 0.3);
+}
+.benefits .stack-dot.is-active {
+  background-color: var(--color-accent);
+}
+
+@media screen and (max-width: 991px) {
+  .stack-dots {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /* All section eyebrows are 12px on mobile per Figma */
+  .section-label {
+    font-size: 0.75em;
+  }
+
+  /* Buttons shrink on mobile (14px text, tighter padding) per Figma */
+  .btn {
+    padding: 0.5em 1em;
+    font-size: 0.875em;
+  }
+}

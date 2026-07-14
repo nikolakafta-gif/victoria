@@ -1,0 +1,199 @@
+---
+const checklist = [
+  "The framework behind your next $10K month",
+  "The pricing math nobody taught you",
+  "Calendar boundaries that protect your energy",
+];
+---
+
+<section class="guide" id="contact">
+  <div class="guide__media">
+    <img src="/assets/images/starter-guide.webp" alt="Victoria smiling in natural light" width="900" height="1195" loading="lazy" />
+  </div>
+
+  <div class="guide__content">
+    <div class="guide__info">
+      <div class="guide__header">
+        <p class="section-label guide__eyebrow">// Contact us</p>
+        <h2 class="guide__heading">Bold moves only: The Starter Guide</h2>
+        <ul class="guide__checklist">
+          {checklist.map((item) => (
+            <li class="guide__check">
+              <span class="guide__bullet" aria-hidden="true"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <form class="guide__form" onsubmit="return false;">
+        <input class="guide__input" type="text" name="fullname" placeholder="Fullname" aria-label="Full name" />
+        <input class="guide__input" type="email" name="email" placeholder="Your email address" aria-label="Your email address" />
+        <button class="btn guide__submit" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .guide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 90em; /* cap at the 1440px design frame — image stops growing on wide screens */
+    margin-inline: auto;
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .guide__media {
+    position: relative;
+    min-height: 40em;
+  }
+  .guide__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .guide__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3em 6em; /* 48px 96px */
+  }
+
+  .guide__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em; /* 32px */
+    width: 100%;
+    max-width: 32.125em; /* 514px */
+  }
+
+  .guide__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /* 24px */
+    width: 100%;
+    max-width: 26.875em; /* 430px */
+  }
+  .guide__eyebrow {
+    color: var(--color-logo);
+  }
+  .guide__heading {
+    font-size: 4em; /* 64px */
+    line-height: 1;
+    letter-spacing: -2.56px;
+    color: var(--color-accent);
+  }
+
+  .guide__checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+  }
+  .guide__check {
+    display: flex;
+    align-items: center;
+    gap: 1em; /* 16px */
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    color: var(--color-text-secondary);
+  }
+  .guide__bullet {
+    flex-shrink: 0;
+    width: 0.5em; /* 8px */
+    height: 0.5em;
+    background-color: var(--color-primary);
+  }
+
+  .guide__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+    width: 100%;
+    max-width: 26.875em; /* 430px */
+  }
+  .guide__input {
+    width: 100%;
+    padding: 1.5em 1.25em; /* 24px 20px */
+    background-color: var(--color-bg-white);
+    border: 1px solid var(--color-border-light);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 1em; /* 16px */
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+  }
+  .guide__input::placeholder {
+    color: var(--color-text-placeholder);
+    text-transform: uppercase;
+  }
+  .guide__submit {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 991px) {
+    /* Tablet: stack, content first, image capped to a contained portrait */
+    .guide {
+      grid-template-columns: 1fr;
+    }
+    .guide__content {
+      order: -1;
+      padding: 4em 0; /* let the 85% content column set the width, like the image */
+    }
+    .guide__info {
+      max-width: 85%; /* match the image width */
+      width: 100%;
+    }
+    .guide__header,
+    .guide__form {
+      max-width: 100%; /* fill the 85% column */
+    }
+    .guide__heading {
+      font-size: 3.25em;
+    }
+    .guide__media {
+      width: 85%; /* 85% of the container, centred (matches the hero image) */
+      aspect-ratio: 900 / 1195; /* keep the portrait's natural proportions */
+      height: auto;
+      max-width: 100%;
+      min-height: 0;
+      margin-inline: auto;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .guide {
+      grid-template-columns: 1fr;
+    }
+    .guide__content {
+      order: -1; /* content above the image on mobile */
+      padding: 2em var(--container-padding); /* py-32 */
+    }
+    .guide__heading {
+      font-size: 2.5em; /* 40px */
+      letter-spacing: -1.6px;
+    }
+    .guide__check {
+      font-size: 0.875em; /* 14px */
+      line-height: 1.428;
+    }
+    .guide__input {
+      padding: 0.5em 1em; /* py-8 px-16 */
+      font-size: 0.875em; /* 14px */
+    }
+    .guide__media {
+      width: 100%; /* reset the tablet cap so it can't force the grid wider on mobile */
+      height: auto;
+      min-height: 28em; /* 449px */
+      margin-inline: 0;
+    }
+  }
+</style>

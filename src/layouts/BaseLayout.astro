@@ -1,0 +1,484 @@
+---
+import "../styles/global.css";
+import Preloader from "../components/Preloader.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Victoria — Business Coach for Women Entrepreneurs",
+  description =
+    "Strategy, pricing and systems for women entrepreneurs scaling past six figures without the burnout. Book a free call with Victoria.",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#fffcf4" />
+    <link rel="canonical" href={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/images/hero-portrait.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+  </head>
+  <body>
+    <a class="sr-only" href="#main" data-skip-link>Skip to content</a>
+    <Preloader />
+    <slot />
+
+    <script>
+      // Wrap each character of [data-roll] links so letters can roll on hover.
+      function initLetterRoll() {
+        const links = document.querySelectorAll("[data-roll]:not(.roll-ready)");
+        links.forEach((link) => {
+          const text = link.textContent ?? "";
+          if (!text.trim()) return;
+          link.setAttribute("aria-label", text.trim());
+          link.textContent = "";
+
+          let index = 0;
+          for (const ch of text) {
+            if (ch === " ") {
+              link.appendChild(document.createTextNode(" "));
+              continue;
+            }
+            const char = document.createElement("span");
+            char.className = "roll-char";
+            char.setAttribute("aria-hidden", "true");
+            char.style.setProperty("--i", String(index));
+
+            const top = document.createElement("span");
+            top.className = "roll-top";
+            top.textContent = ch;
+
+            const bottom = document.createElement("span");
+            bottom.className = "roll-bottom";
+            bottom.textContent = ch;
+
+            char.append(top, bottom);
+            link.appendChild(char);
+            index++;
+          }
+          link.classList.add("roll-ready");
+        });
+      }
+
+      initLetterRoll();
+      document.addEventListener("astro:after-swap", initLetterRoll);
+    </script>
+
+    <script>
+      // Stacked swipe-card carousel (Client Love + Results) for tablet & mobile.
+      // Cards are absolutely stacked; the top card can be dragged/swiped left or
+      // right to advance (wrapping around), with arrow + dot controls. On desktop
+      // the cards keep their normal (fan / timeline) layout — no inline styles.
+      // Native — no libraries.
+      function initStackCarousels() {
+        const touch = window.matchMedia("(max-width: 991px)");
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        document.querySelectorAll("[data-stack]").forEach((container) => {
+          if (container.dataset.stackReady) return;
+          container.dataset.stackReady = "1";
+
+          const parent = container.parentElement;
+          const cards = Array.from(container.children).filter(
+            (el) => !el.hasAttribute("data-stack-ignore")
+          );
+          const n = cards.length;
+          if (n < 2) return;
+
+          const dotsWrap = parent?.querySelector("[data-stack-dots]");
+          const prevBtn = parent?.querySelector("[data-stack-prev]");
+          const nextBtn = parent?.querySelector("[data-stack-next]");
+
+          let index = 0;
+
+          // Depth 0 = top card, then the cards peeking behind it.
+          const depthConf = [
+            { s: 1, y: 0, r: 0, o: 1, z: 30 },
+            { s: 0.95, y: 14, r: -3, o: 0.55, z: 20 },
+            { s: 0.9, y: 28, r: -5, o: 0.28, z: 10 },
+          ];
+
+          let dots = [];
+          if (dotsWrap) {
+            dotsWrap.innerHTML = "";
+            dots = cards.map((_, i) => {
+              const b = document.createElement("button");
+              b.type = "button";
+              b.className = "stack-dot";
+              b.setAttribute("aria-label", "Show card " + (i + 1));
+              b.addEventListener("click", () => go(i));
+              dotsWrap.appendChild(b);
+              return b;
+            });
+          }
+
+          const applyCard = (card, depth) => {
+            const c = depthConf[depth] || { s: 0.88, y: 34, r: -6, o: 0, z: 0 };
+            card.style.zIndex = String(c.z);
+            card.style.opacity = String(c.o);
+            card.style.visibility = c.o === 0 ? "hidden" : "visible";
+            card.style.pointerEvents = depth === 0 ? "auto" : "none";
+            card.style.transform =
+              "translateX(0) translateY(" + c.y + "px) scale(" + c.s + ") rotate(" + c.r + "deg)";
+            card.classList.toggle("is-top", depth === 0);
+          };
+
+          const clearCard = (card) => {
+            card.style.zIndex = "";
+            card.style.opacity = "";
+            card.style.visibility = "";
+            card.style.pointerEvents = "";
+            card.style.transform = "";
+            card.style.transition = "";
+            card.classList.remove("is-top");
+          };
+
+          const layout = () => {
+            if (touch.matches) {
+              cards.forEach((card, i) => applyCard(card, (i - index + n) % n));
+            } else {
+              cards.forEach(clearCard);
+            }
+            dots.forEach((d, i) => d.classList.toggle("is-active", touch.matches && i === index));
+          };
+
+          const go = (i) => {
+            index = ((i % n) + n) % n;
+            layout();
+          };
+          const next = () => go(index + 1);
+          const prev = () => go(index - 1);
+
+          prevBtn?.addEventListener("click", prev);
+          nextBtn?.addEventListener("click", next);
+
+          // Lock the stack height to the tallest card so the absolute cards fit.
+          const measure = () => {
+            container.classList.remove("is-stacked");
+            container.style.height = "";
+            if (!touch.matches) {
+              layout(); // clears inline styles for the desktop layout
+              return;
+            }
+            let h = 0;
+            cards.forEach((c) => {
+              h = Math.max(h, c.offsetHeight);
+            });
+            container.style.height = h + "px";
+            container.classList.add("is-stacked");
+            layout();
+          };
+
+          // Drag / swipe on the top card.
+          let startX = 0;
+          let startY = 0;
+          let dragging = false;
+          let decided = false;
+          let horizontal = false;
+          const topCard = () => cards[index];
+
+          const onDown = (e) => {
+            if (!touch.matches) return;
+            const card = topCard();
+            if (!(e.target instanceof Node) || !card.contains(e.target)) return;
+            dragging = true;
+            decided = false;
+            horizontal = false;
+            startX = e.clientX;
+            startY = e.clientY;
+            card.style.transition = "none";
+          };
+          const onMove = (e) => {
+            if (!dragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            if (!decided) {
+              if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+              decided = true;
+              horizontal = Math.abs(dx) > Math.abs(dy);
+            }
+            if (!horizontal) return; // let the page scroll vertically
+            e.preventDefault();
+            topCard().style.transform =
+              "translateX(" + dx + "px) translateY(0) scale(1) rotate(" + dx / 22 + "deg)";
+          };
+          const onUp = (e) => {
+            if (!dragging) return;
+            dragging = false;
+            const card = topCard();
+            card.style.transition = "";
+            if (!horizontal) return;
+            const dx = e.clientX - startX;
+            if (Math.abs(dx) > 80) {
+              const dir = dx < 0 ? -1 : 1;
+              card.style.transform =
+                "translateX(" + dir * 120 + "%) translateY(0) scale(1) rotate(" + dir * 12 + "deg)";
+              card.style.opacity = "0";
+              const advance = () => {
+                card.style.transition = "none";
+                dir < 0 ? next() : prev();
+                requestAnimationFrame(() => {
+                  card.style.transition = "";
+                });
+              };
+              if (reduce) advance();
+              else window.setTimeout(advance, 260);
+            } else {
+              layout(); // snap back into place
+            }
+          };
+
+          container.addEventListener("pointerdown", onDown);
+          window.addEventListener("pointermove", onMove, { passive: false });
+          window.addEventListener("pointerup", onUp);
+          window.addEventListener("pointercancel", onUp);
+
+          measure();
+          window.addEventListener("load", measure);
+          // Fonts change card heights — re-measure once they've settled.
+          if (document.fonts?.ready) document.fonts.ready.then(measure);
+          let rt = 0;
+          window.addEventListener("resize", () => {
+            window.clearTimeout(rt);
+            rt = window.setTimeout(measure, 200);
+          });
+          touch.addEventListener("change", measure);
+        });
+      }
+
+      initStackCarousels();
+      document.addEventListener("astro:after-swap", initStackCarousels);
+    </script>
+
+    <script>
+      // Lenis smooth scroll, driven by the GSAP ticker (single rAF loop).
+      import Lenis from "lenis";
+      import gsap from "gsap";
+
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduce) {
+        const lenis = new Lenis({
+          duration: 1.1,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+        });
+
+        // Expose so the menu overlay can pause/resume scrolling.
+        window.lenis = lenis;
+
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Smooth in-page anchor navigation (offset clears the sticky navbar).
+        // Handles "#hash", "/#hash" and "/path#hash" when already on that page;
+        // cross-page links fall through to normal navigation.
+        document.addEventListener("click", (e) => {
+          const el = e.target;
+          if (!(el instanceof Element)) return;
+          const anchor = el.closest('a[href*="#"]');
+          if (!anchor) return;
+          // Let the skip link fall through so the browser moves focus to <main>.
+          if (anchor.hasAttribute("data-skip-link")) return;
+          const url = new URL(anchor.href, location.href);
+          if (url.pathname !== location.pathname || !url.hash) return;
+          const target = document.querySelector(url.hash);
+          if (!target) return;
+          e.preventDefault();
+          lenis.scrollTo(target, { offset: -72, force: true });
+        });
+      }
+    </script>
+
+    <script>
+      // Intro (navbar + hero) + elegant scroll-in reveals for the rest of the
+      // page. Restrained, editorial motion suited to a coaching brand.
+      import gsap from "gsap";
+      import ScrollTrigger from "gsap/ScrollTrigger";
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduceMotion) {
+        // Keep ScrollTrigger synced with Lenis' smoothed scroll.
+        window.lenis?.on("scroll", ScrollTrigger.update);
+
+        /* ---- Intro: navbar + hero, played once the preloader clears ---- */
+        const intro = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+        intro
+          .from(".navbar", { y: -24, autoAlpha: 0, duration: 0.7 })
+          .from(".hero__image", { autoAlpha: 0, duration: 1.1, ease: "power2.out" }, 0)
+          .from(".hero__image img", { scale: 1.12, duration: 1.7, ease: "power2.out" }, 0)
+          .from(".hero__inner > *", { y: 40, autoAlpha: 0, duration: 0.9, stagger: 0.12 }, 0.25)
+          // Contact page hero (no-op on other pages)
+          .from(".chero__media", { autoAlpha: 0, duration: 1.1, ease: "power2.out" }, 0)
+          .from(".chero__info > *", { y: 40, autoAlpha: 0, duration: 0.9, stagger: 0.1 }, 0.25)
+          // Work With Me page hero (no-op on other pages)
+          .from(".whero__media", { autoAlpha: 0, duration: 1.1, ease: "power2.out" }, 0)
+          .from(".whero__content > *", { y: 40, autoAlpha: 0, duration: 0.9, stagger: 0.1 }, 0.25);
+
+        let introPlayed = false;
+        const playIntro = () => {
+          if (introPlayed) return;
+          introPlayed = true;
+          intro.play();
+        };
+
+        if (document.getElementById("preloader")) {
+          window.addEventListener("preloader:done", playIntro, { once: true });
+          window.setTimeout(playIntro, 6000); // fallback if the event is missed
+        } else {
+          playIntro();
+        }
+
+        /* ---- Scroll-in reveals ---- */
+        const revealUp = (targets, vars = {}) => {
+          gsap.utils.toArray(targets).forEach((el) => {
+            gsap.from(el, {
+              y: 48,
+              autoAlpha: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: { trigger: el, start: "top 85%", once: true },
+              ...vars,
+            });
+          });
+        };
+
+        const revealStagger = (containers, childSelector, vars = {}) => {
+          gsap.utils.toArray(containers).forEach((c) => {
+            gsap.from(c.querySelectorAll(childSelector), {
+              y: 48,
+              autoAlpha: 0,
+              duration: 0.9,
+              ease: "power3.out",
+              stagger: 0.12,
+              scrollTrigger: { trigger: c, start: "top 80%", once: true },
+              ...vars,
+            });
+          });
+        };
+
+        // Philosophy
+        revealStagger(".philosophy__inner", ":scope > *");
+
+        // Work With Me — big words slide in from the sides, card rises
+        const workST = { trigger: ".work", start: "top 70%", once: true };
+        gsap.from(".work__word--left", { x: -60, autoAlpha: 0, duration: 1, ease: "power3.out", scrollTrigger: workST });
+        gsap.from(".work__word--right", { x: 60, autoAlpha: 0, duration: 1, ease: "power3.out", scrollTrigger: workST });
+        revealUp(".work__card", { y: 60 });
+
+        // On tablet/mobile the Benefits cards and Testimonials rows are driven by
+        // the stacked swipe-carousel (inline transforms), so their scroll reveals
+        // run on desktop only — otherwise GSAP would fight the stack.
+        const isDesktop = window.matchMedia("(min-width: 992px)").matches;
+
+        // Benefits — heading, then the fanned cards rise. Animate the inner
+        // card (the wrapper holds the CSS rotation, which GSAP must not clobber).
+        revealUp(".benefits__head");
+        if (isDesktop) {
+          revealStagger(".benefits__items", ".benefits__card", { y: 60, stagger: 0.1 });
+        }
+
+        // Meet the Coach
+        revealStagger(".coach__profile", ":scope > *");
+        revealUp(".coach__momentum", { y: 60 });
+
+        // Testimonials — vertical timeline: heading, per-row reveal, dot
+        // activation, and a progress line that fills as you scroll through.
+        revealUp(".testimonials__head");
+        if (isDesktop) {
+          gsap.utils.toArray(".timeline__row").forEach((row) => {
+            const num = row.querySelector(".timeline__num");
+            const card = row.querySelector(".tcard");
+            const dot = row.querySelector(".timeline__dot");
+            // Card pops in (scale + fade) as it enters the viewport.
+            gsap.from(card, {
+              scale: 0.85,
+              autoAlpha: 0,
+              duration: 0.7,
+              ease: "back.out(1.4)",
+              scrollTrigger: { trigger: row, start: "top 82%", once: true },
+            });
+            // Number fades from dim (~35%) to full as the timeline reaches it.
+            gsap.from(num, {
+              opacity: 0.35,
+              duration: 0.6,
+              ease: "power2.out",
+              scrollTrigger: { trigger: row, start: "top 62%", once: true },
+            });
+            // Dot lights up at the same point the number does.
+            ScrollTrigger.create({
+              trigger: row,
+              start: "top 62%",
+              onEnter: () => dot?.classList.add("is-active"),
+              onLeaveBack: () => dot?.classList.remove("is-active"),
+            });
+          });
+          const timelineProgress = document.querySelector(".timeline__progress");
+          if (timelineProgress) {
+            gsap.to(timelineProgress, {
+              scaleY: 1,
+              ease: "none",
+              scrollTrigger: { trigger: ".timeline", start: "top 65%", end: "bottom 65%", scrub: 0.4 },
+            });
+          }
+        }
+
+        // Starter Guide — image fades in, content staggers
+        gsap.from(".guide__media", { autoAlpha: 0, y: 40, duration: 1.1, ease: "power2.out", scrollTrigger: { trigger: ".guide", start: "top 80%", once: true } });
+        revealStagger(".guide__info", ":scope > *");
+
+        // Contact + Work With Me FAQ / CTA (no-op on other pages)
+        revealUp(".faq__head");
+        revealStagger(".faq__list", ".faq__item", { y: 30, stagger: 0.08 });
+        revealUp(".cta__inner", { y: 60 });
+
+        // Work With Me page sections (no-op on other pages)
+        revealStagger(".plans__grid", ".plan", { y: 40, stagger: 0.1 });
+        revealUp(".process__head");
+        revealStagger(".process__steps", ".process__step", { y: 40, stagger: 0.12 });
+        revealUp(".outcomes__head");
+        revealStagger(".outcomes__body", ".outcomes__point", { y: 30, stagger: 0.08 });
+        revealUp(".outcomes__media", { y: 50 });
+        revealUp(".numbers__heading");
+        revealStagger(".numbers__grid", ".numbers__stat", { y: 30, stagger: 0.1 });
+        revealUp(".wcta__media", { y: 50 });
+        revealStagger(".wcta__inner", ":scope > *");
+
+        // Footer
+        revealStagger(".footer__inner", ":scope > *");
+
+        // Recalculate trigger positions once fonts/images/layout have settled.
+        window.addEventListener("load", () => ScrollTrigger.refresh());
+        window.addEventListener("preloader:done", () => ScrollTrigger.refresh());
+      }
+    </script>
+  </body>
+</html>

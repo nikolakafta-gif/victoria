@@ -1,0 +1,239 @@
+---
+interface FaqEntry {
+  q: string;
+  a: string;
+}
+interface Props {
+  items?: FaqEntry[];
+}
+
+const defaultItems: FaqEntry[] = [
+  {
+    q: "What happens after I apply?",
+    a: "You'll get a short intake form, then we book a 30-minute call to map your goals and see if we're the right fit. No pressure, no pitch.",
+  },
+  {
+    q: "What if we're not a fit after the call?",
+    a: "Then I'll point you to the resource, program, or person who is. You leave with clarity either way, and there's zero obligation.",
+  },
+  {
+    q: "Can I upgrade from The Collective later?",
+    a: "Absolutely. It's the same method, the Sustainable Scale Method, at three levels of access and investment. Move up whenever you're ready.",
+  },
+  {
+    q: "Do you offer payment plans?",
+    a: "Yes. Every program has a monthly option so you can start now and spread the investment across your engagement.",
+  },
+  {
+    q: "Do you guarantee results?",
+    a: "I guarantee my full effort, a proven framework, and honest feedback. Results depend on the work you put in, and I'll hold you to it.",
+  },
+];
+
+const { items = defaultItems } = Astro.props;
+---
+
+<section class="faq" id="faq">
+  <div class="faq__head">
+    <p class="section-label faq__eyebrow">// FAQ</p>
+    <h2 class="faq__heading">Questions, answered</h2>
+  </div>
+
+  <div class="faq__list">
+    {items.map((item, i) => (
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false">
+          <span class="faq__num">{String(i + 1).padStart(2, "0")}</span>
+          <span class="faq__question">{item.q}</span>
+          <span class="faq__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <line class="faq__icon-v" x1="12" y1="5" x2="12" y2="19" />
+            </svg>
+          </span>
+        </button>
+        <div class="faq__answer-wrap">
+          <div class="faq__answer">
+            <p>{item.a}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4em; /* 64px */
+    padding: 7.5em var(--container-padding); /* 120px */
+    background-color: var(--color-bg-dark);
+  }
+
+  .faq__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75em; /* 12px */
+    text-align: center;
+  }
+  .faq__eyebrow {
+    color: var(--color-text-white);
+  }
+  .faq__heading {
+    font-size: 4.5em; /* 72px */
+    line-height: 1;
+    letter-spacing: -2.88px;
+    color: var(--color-text-white);
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+    width: 100%;
+    max-width: 54.125em; /* 866px */
+  }
+
+  .faq__item {
+    background-color: var(--color-bg-white);
+    border: 1px solid var(--color-border-light);
+  }
+
+  .faq__q {
+    display: flex;
+    align-items: center;
+    gap: 1em; /* 16px */
+    width: 100%;
+    padding: 1.5em; /* 24px */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+  .faq__num {
+    flex-shrink: 0;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1em; /* 16px */
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .faq__question {
+    flex: 1;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2em; /* 32px */
+    line-height: 1.1;
+    letter-spacing: -1.28px;
+    color: var(--color-text-primary);
+  }
+  .faq__icon {
+    flex-shrink: 0;
+    display: block;
+    width: 1.5em; /* 24px */
+    height: 1.5em;
+    color: var(--color-accent);
+  }
+  .faq__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .faq__icon-v {
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+  .faq__item.is-open .faq__icon-v {
+    transform: scaleY(0);
+  }
+
+  /* Grid-rows trick animates the answer height with no JS measuring. */
+  .faq__answer-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+  }
+  .faq__item.is-open .faq__answer-wrap {
+    grid-template-rows: 1fr;
+  }
+  .faq__answer {
+    overflow: hidden;
+  }
+  .faq__answer p {
+    padding: 0 1.5em 1.5em; /* 24px, aligns under the question */
+    margin-left: 2em; /* clear the counter number */
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.5;
+    letter-spacing: -0.36px;
+    color: var(--color-text-secondary);
+  }
+
+  @media screen and (max-width: 991px) {
+    .faq {
+      padding-block: 5em; /* 80px */
+    }
+    .faq__heading {
+      font-size: 3.5em;
+    }
+    .faq__question {
+      font-size: 1.5em; /* 24px */
+      letter-spacing: -0.96px;
+    }
+    .faq__answer p {
+      font-size: 1em; /* 16px */
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .faq {
+      gap: 3em;
+      padding-block: 3em; /* 48px */
+    }
+    .faq__heading {
+      font-size: 2.5em; /* 40px */
+      letter-spacing: -1.6px;
+    }
+    .faq__q {
+      gap: 0.75em;
+      padding: 1.25em; /* 20px */
+    }
+    .faq__question {
+      font-size: 1.25em; /* 20px */
+      letter-spacing: -0.8px;
+    }
+    .faq__num {
+      font-size: 0.875em;
+    }
+    .faq__icon {
+      width: 1.25em;
+      height: 1.25em;
+    }
+    .faq__answer p {
+      margin-left: 0;
+      padding: 0 1.25em 1.25em;
+      font-size: 0.875em; /* 14px */
+      line-height: 1.5;
+    }
+  }
+</style>
+
+<script>
+  function initFaq() {
+    document.querySelectorAll(".faq__item").forEach((item) => {
+      const btn = item.querySelector(".faq__q");
+      if (!btn || btn.dataset.faqReady) return;
+      btn.dataset.faqReady = "1";
+      btn.addEventListener("click", () => {
+        const open = item.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+  }
+  initFaq();
+  document.addEventListener("astro:after-swap", initFaq);
+</script>

@@ -1,0 +1,199 @@
+---
+---
+
+<section class="work" id="work-with-me">
+  <div class="work__bg" aria-hidden="true">
+    <img src="/assets/images/work-bg.webp" alt="" width="816" height="1456" loading="lazy" />
+  </div>
+
+  <span class="work__word work__word--left" aria-hidden="true">WORK</span>
+  <span class="work__word work__word--right" aria-hidden="true">WITH ME</span>
+
+  <article class="work__card">
+    <p class="work__counter">
+      <span class="work__counter-active">01</span><span class="work__counter-dim">/03</span>
+    </p>
+    <h3 class="work__title">Private Coaching</h3>
+
+    <div class="work__media">
+      <img src="/assets/images/work-card.webp" alt="Two women in conversation during a coaching session" width="800" height="533" loading="lazy" />
+      <a class="work__btn" href="#work-with-me">
+        Learn more
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" width="20" height="20">
+          <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+
+    <p class="work__desc">
+      6 months of 1:1. Full access, deep strategy, your numbers and your life
+      both on the table.
+    </p>
+  </article>
+</section>
+
+<style>
+  .work {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58.75em; /* 940px */
+    padding: 4em var(--container-padding);
+    overflow: hidden;
+    background-color: var(--color-bg-pink);
+    isolation: isolate;
+  }
+
+  .work__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .work__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .work__word {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -1;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 5em; /* 80px */
+    line-height: 1;
+    letter-spacing: -3.2px;
+    color: var(--color-text-white);
+    white-space: nowrap;
+  }
+  .work__word--left {
+    left: var(--container-padding);
+  }
+  .work__word--right {
+    right: var(--container-padding);
+  }
+
+  .work__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.25em; /* 36px */
+    width: 40.5em; /* 648px */
+    max-width: 100%;
+    padding: 2em 1.5em; /* 32px 24px */
+    background-color: var(--color-bg-white);
+  }
+
+  .work__counter {
+    display: flex;
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1em; /* 16px */
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .work__counter-dim {
+    opacity: 0.2;
+  }
+
+  .work__title {
+    font-size: 2.5em; /* 40px */
+    line-height: 1;
+    letter-spacing: -1.6px;
+    text-align: center;
+    color: var(--color-text-ink);
+  }
+
+  .work__media {
+    position: relative;
+    width: 100%;
+    height: 24.625em; /* 394px */
+  }
+  .work__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .work__btn {
+    position: absolute;
+    left: 50%;
+    bottom: 2.25em;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75em; /* 12px */
+    padding: 0.75em 0.75em 0.75em 1.5em; /* 12 / 24 left */
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: var(--color-text-white);
+    white-space: nowrap;
+  }
+  .work__btn svg {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .work__desc {
+    /* em max-width resolves against THIS element's font-size (18px), so 424px = 23.56em */
+    max-width: 23.56em; /* 424px */
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+
+  @media screen and (max-width: 991px) {
+    .work__word {
+      font-size: 3em;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .work {
+      min-height: 0;
+      padding-block: 2.5em; /* 40px */
+    }
+    .work__word {
+      display: none;
+    }
+    .work__card {
+      width: 100%;
+      max-width: 17em; /* ~269px */
+      gap: 1.5em; /* 24px */
+      padding: 1em; /* 16px */
+    }
+    .work__counter {
+      font-size: 0.875em; /* 14px */
+    }
+    .work__title {
+      font-size: 1.75em; /* 28px */
+      letter-spacing: -1.12px;
+    }
+    .work__media {
+      height: 13em; /* 208px */
+    }
+    .work__desc {
+      font-size: 0.875em; /* 14px */
+      line-height: 1.428;
+    }
+    .work__btn {
+      font-size: 0.875em; /* 14px */
+      padding: 0.5em 0.5em 0.5em 1em;
+    }
+  }
+</style>

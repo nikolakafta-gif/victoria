@@ -1,0 +1,188 @@
+---
+const fields = [
+  { type: "text", name: "fullname", placeholder: "Fullname" },
+  { type: "email", name: "email", placeholder: "Your email address" },
+  { type: "text", name: "stage", placeholder: "Where's your business right now?" },
+];
+---
+
+<section class="chero" id="top">
+  <div class="chero__media" aria-hidden="true">
+    <img src="/assets/images/contact-hero.webp" alt="" width="1600" height="1197" fetchpriority="high" />
+  </div>
+
+  <div class="chero__card">
+    <div class="chero__info">
+      <div class="chero__header">
+        <p class="section-label chero__eyebrow">// Contact us</p>
+        <h1 class="chero__heading">Let&rsquo;s talk about your next chapter.</h1>
+        <p class="chero__desc">
+          Two ways in: write to me, or skip the typing and book straight into
+          the calendar.
+        </p>
+      </div>
+
+      <form class="chero__form" onsubmit="return false;">
+        {fields.map((f) => (
+          <input
+            class="chero__input"
+            type={f.type}
+            name={f.name}
+            placeholder={f.placeholder}
+            aria-label={f.placeholder}
+          />
+        ))}
+        <textarea
+          class="chero__input chero__textarea"
+          name="message"
+          placeholder="What do you want to build?"
+          aria-label="What do you want to build?"
+          rows="4"></textarea>
+        <button class="btn chero__submit" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 54.625em; /* 874px */
+    max-width: 90em; /* cap at the 1440px design frame */
+    margin-inline: auto;
+    padding: 4em; /* 64px */
+    background-color: var(--color-bg-soft-cream);
+    overflow: hidden;
+  }
+
+  .chero__media {
+    position: absolute;
+    inset: 0;
+  }
+  .chero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .chero__card {
+    position: relative;
+    z-index: 1;
+    width: 40.25em; /* 644px */
+    max-width: 100%;
+    padding: 3em; /* 48px */
+    background-color: var(--color-bg-soft-cream);
+  }
+
+  .chero__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em; /* 32px */
+    width: 100%;
+  }
+
+  .chero__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /* 24px */
+    width: 100%;
+  }
+  .chero__eyebrow {
+    color: var(--color-logo);
+  }
+  .chero__heading {
+    /* em max-width resolves against THIS element's font-size (64px), so 385px = 6.02em */
+    max-width: 6.02em; /* 385px */
+    font-size: 4em; /* 64px */
+    line-height: 1;
+    letter-spacing: -2.56px;
+    color: var(--color-text-primary);
+  }
+  .chero__desc {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.125em; /* 18px */
+    line-height: 1.333;
+    letter-spacing: -0.36px;
+    color: var(--color-text-secondary);
+  }
+
+  .chero__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 16px */
+    width: 100%;
+  }
+  .chero__input {
+    width: 100%;
+    padding: 0.75em 1.25em; /* 12px 20px */
+    background-color: var(--color-bg-white);
+    border: 1px solid var(--color-border-light);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.875em; /* 14px */
+    line-height: 1.428;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+  }
+  .chero__input::placeholder {
+    color: var(--color-text-placeholder);
+    text-transform: uppercase;
+  }
+  .chero__textarea {
+    min-height: 8.375em; /* 134px */
+    resize: vertical;
+  }
+  .chero__submit {
+    width: 100%;
+  }
+
+  /* Tablet & below: stack the card above a contained image */
+  @media screen and (max-width: 991px) {
+    .chero {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 2em;
+      min-height: 0;
+      padding: 4em var(--container-padding);
+    }
+    .chero__media {
+      position: relative;
+      inset: auto;
+      order: 1;
+      width: 85%;
+      aspect-ratio: 4 / 3;
+      margin-inline: auto;
+    }
+    .chero__card {
+      order: 0;
+      width: 100%;
+      padding: 0;
+    }
+    .chero__info {
+      align-items: flex-start;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .chero {
+      padding-block: 2em;
+    }
+    .chero__heading {
+      max-width: none; /* fill the column on mobile */
+      font-size: 2.5em; /* 40px */
+      letter-spacing: -1.6px;
+    }
+    .chero__desc {
+      font-size: 0.875em; /* 14px */
+      line-height: 1.428;
+    }
+    .chero__media {
+      width: 100%;
+    }
+  }
+</style>
